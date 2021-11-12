@@ -1,3 +1,10 @@
+# Skipped data
+user_data/data/binance/
+user_data/hyperopt_results/
+user_data/backrest_results/
+user_data/plot/
+user_data/config.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
