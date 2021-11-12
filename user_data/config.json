@@ -1,0 +1,107 @@
+{
+  "max_open_trades": 5,
+  "stake_currency": "USDT",
+  "stake_amount": "unlimited",
+  "tradable_balance_ratio": 0.99,
+  "fiat_display_currency": "PHP",
+  "dry_run": true,
+  "dry_run_wallet": 200,
+  "cancel_open_orders_on_exit": false,
+  "unfilledtimeout": {
+    "buy": 10,
+    "sell": 30,
+    "unit": "minutes"
+  },
+  "bid_strategy": {
+    "price_side": "bid",
+    "ask_last_balance": 0.0,
+    "use_order_book": true,
+    "order_book_top": 1,
+    "check_depth_of_market": {
+      "enabled": false,
+      "bids_to_ask_delta": 1
+    }
+  },
+  "ask_strategy": {
+    "price_side": "ask",
+    "use_order_book": true,
+    "order_book_top": 1
+  },
+  "exchange": {
+    "name": "binance",
+    "key": "",
+    "secret": "",
+    "ccxt_config": { "enableRateLimit": true },
+    "ccxt_async_config": {
+      "enableRateLimit": true,
+      "rateLimit": 200
+    },
+    "pair_whitelist": [
+      "BTC/USDT",
+      "ETH/USDT",
+      "SHIB/USDT",
+      "SOL/USDT",
+      "BUSD/USDT",
+      "FTM/USDT",
+      "DOT/USDT",
+      "MATIC/USDT",
+      "LINK/USDT",
+      "AVAX/USDT",
+      "XRP/USDT",
+      "LUNA/USDT",
+      "AXS/USDT",
+      "ADA/USDT",
+      "ONE/USDT",
+      "ATOM/USDT",
+      "TRX/USDT",
+      "USDC/USDT",
+      "FIL/USDT"
+    ],
+    "pair_blacklist": ["BNB/.*"]
+  },
+  "pairlists": [
+    {
+      "method": "StaticPairList",
+      "number_assets": 20,
+      "sort_key": "quoteVolume",
+      "min_value": 0,
+      "refresh_period": 1800
+    }
+  ],
+  "edge": {
+    "enabled": true,
+    "process_throttle_secs": 3600,
+    "calculate_since_number_of_days": 7,
+    "allowed_risk": 0.01,
+    "stoploss_range_min": -0.01,
+    "stoploss_range_max": -0.1,
+    "stoploss_range_step": -0.01,
+    "minimum_winrate": 0.6,
+    "minimum_expectancy": 0.2,
+    "min_trade_number": 10,
+    "max_trade_duration_minute": 1440,
+    "remove_pumps": false
+  },
+  "telegram": {
+    "enabled": true,
+    "token": "2068493576:AAGBeDlPPqWv5lUy-nV_TTnVcW4H3sWBmvk",
+    "chat_id": "950132688"
+  },
+  "api_server": {
+    "enabled": true,
+    "listen_ip_address": "127.0.0.1",
+    "listen_port": 8080,
+    "verbosity": "error",
+    "enable_openapi": false,
+    "jwt_secret_key": "afa2c70324d4a04df6c3b9f5178a2c4118956ac6c4e313ea24a7603bbd026400",
+    "CORS_origins": [],
+    "username": "freqtrader_nasu",
+    "password": "!FreqtraderNasu"
+  },
+  "bot_name": "freqtrade",
+  "initial_state": "running",
+  "forcebuy_enable": false,
+  "internals": {
+    "process_throttle_secs": 5
+  }
+}
