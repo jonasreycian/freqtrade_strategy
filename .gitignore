@@ -5,6 +5,8 @@ user_data/backrest_results/
 user_data/plot/
 user_data/config.json
 
+user_data/*.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
