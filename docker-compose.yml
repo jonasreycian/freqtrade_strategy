@@ -30,8 +30,21 @@ services:
     # -strategy AOTSStrategy
     # --strategy BBRSINaiveStrategy
     # Pairlist
+    # "method": "StaticPairList",
+    # Not llowed for backtesting: VolumePairList, AgeFilter
     # ['StaticPairList', 'VolumePairList', 'AgeFilter', 'OffsetFilter', 'PerformanceFilter',
     # 'PrecisionFilter', 'PriceFilter', 'RangeStabilityFilter', 'ShuffleFilter', 'SpreadFilter', 'VolatilityFilter']
-    # docker-compose run --rm freqtrade hyperopt --hyperopt-loss SharpeHyperOptLossDaily --spaces roi stoploss trailing --strategy MarsiStrategy -e 200
+    # docker-compose run --rm freqtrade hyperopt --hyperopt-loss SharpeHyperOptLossDaily --spaces all --ignore-missing-spaces --strategy UptrendStrategy -e 1000
+    # docker-compose run --rm freqtrade hyperopt --hyperopt-loss SharpeHyperOptLossDaily --spaces all --ignore-missing-spaces --strategy UptrendStrategy -e 1000 --eps
     # docker-compose run --rm freqtrade backtesting -c user_data/config.json -s UptrendStrategy --timeframe 15m
     # docker-compose run --rm freqtrade plot-dataframe -c user_data/config.json -p SHIB/USDT --timeframe 15m
+
+    # --hyperopt-loss NAME, --hyperoptloss NAME
+    #                     shorttradedurhyperoptloss, onlyprofithyperoptloss,
+    #                     sharpehyperoptloss, sharpehyperoptlossdaily,
+    #                     sortinohyperoptloss, sortinohyperoptlossdaily,
+    #
+    # # --spaces {all,buy,sell,roi,stoploss,trailing,protection,default}
+    # --eps, --enable-position-stacking
+    #                     Allow buying the same pair multiple times (position
+    #                     stacking).
