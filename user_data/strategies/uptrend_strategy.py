@@ -47,19 +47,19 @@ class UptrendStrategy(IStrategy):
     INTERFACE_VERSION = 2
 
     # ROI table:
-    minimal_roi = {"0": 0.1, "90": 0.135, "219": 0.047, "510": 0}
+    minimal_roi = {"0": 0.252, "93": 0.134, "246": 0.057, "595": 0}
 
     # Stoploss:
-    stoploss = -0.05
+    stoploss = -0.079
 
     # Trailing stop:
     trailing_stop = True
-    trailing_stop_positive = 0.01
-    trailing_stop_positive_offset = 0.07
+    trailing_stop_positive = 0.26
+    trailing_stop_positive_offset = 0.337
     trailing_only_offset_is_reached = True
 
     # Optimal timeframe for the strategy.
-    timeframe = "5m"
+    timeframe = "15m"
 
     # Run "populate_indicators()" only for new candle.
     process_only_new_candles = False
@@ -151,8 +151,7 @@ class UptrendStrategy(IStrategy):
         # # SMA - Simple Moving Average
         dataframe["sma5"] = ta.SMA(dataframe, timeperiod=5)
         dataframe["sma10"] = ta.SMA(dataframe, timeperiod=10)
-        dataframe["sma24_open"] = ta.SMA(dataframe, timeperiod=24)
-        dataframe["sma24_close"] = ta.SMA(dataframe, timeperiod=24)
+        dataframe["sma24"] = ta.SMA(dataframe, timeperiod=24)
         dataframe["sma50"] = ta.SMA(dataframe, timeperiod=50)
         dataframe["sma100"] = ta.SMA(dataframe, timeperiod=100)
         dataframe["sma200"] = ta.SMA(dataframe, timeperiod=200)
@@ -184,19 +183,20 @@ class UptrendStrategy(IStrategy):
         :param metadata: Additional information, like the currently traded pair
         :return: DataFrame with buy column
         """
+        # Close price should trail around 4% from sma24
+        trail_percent = (
+            abs(dataframe["close"] - dataframe["sma24"]) / dataframe["sma24"] * 100
+        )
         dataframe.loc[
             (
                 (
-                    (dataframe["close"] > dataframe["sma24"])
-                    & (dataframe["sma24"] > dataframe["sma50"])
-                    & (dataframe["sma50"] > dataframe["sma100"])
-                    # & (
-                    #     (
-                    #         (dataframe["rsi_14"] > 60)
-                    #         & (dataframe["rsi_14"] > dataframe["rsi_30"])
-                    #     )
-                    #     | (dataframe["macd"] > dataframe["macdsignal"])
-                    # )
+                    (
+                        (dataframe["sma5"] > dataframe["sma24"])
+                        & (dataframe["sma24"] > dataframe["sma50"])
+                        & (dataframe["sma50"] > dataframe["sma100"])
+                    )
+                    # & (trail_percent <= 4.0)
+                    # | (dataframe["sma100"] > dataframe["sma200"])
                 )
             ),
             "buy",
@@ -211,14 +211,68 @@ class UptrendStrategy(IStrategy):
         :param metadata: Additional information, like the currently traded pair
         :return: DataFrame with buy column
         """
-        dataframe.loc[
-            (
-                (dataframe["sma5"] < dataframe["sma10"])
-                # | (
-                #     (dataframe["rsi_14"] < dataframe["rsi_30"])
-                #     & (dataframe["macdhist"] < 0)
-                # )
-            ),
-            "sell",
-        ] = 1
+        # dataframe.loc[
+        #     (
+        #         (dataframe["sma5"] < dataframe["sma10"])
+        #         # | (
+        #         #     (dataframe["rsi_14"] < dataframe["rsi_30"])
+        #         #     & (dataframe["macdhist"] < 0)
+        #         # )
+        #     ),
+        #     "sell",
+        # ] = 1
         return dataframe
+
+
+pair_list = [
+    "BTC/USDT",
+    "ETH/USDT",
+    "SHIB/USDT",
+    "OMG/USDT",
+    "MANA/USDT",
+    "LRC/USDT",
+    "XRP/USDT",
+    "LTC/USDT",
+    "CTSI/USDT",
+    "DOT/USDT",
+    "SOL/USDT",
+    "SAND/USDT",
+    "TRX/USDT",
+    "DOGE/USDT",
+    "ADA/USDT",
+    "FIL/USDT",
+    "CHZ/USDT",
+    "MINA/USDT",
+    "IOTX/USDT",
+    "ALGO/USDT",
+    "CHR/USDT",
+    "ATA/USDT",
+    "LINK/USDT",
+    "FTM/USDT",
+    "ENS/USDT",
+    "AVAX/USDT",
+    "NEAR/USDT",
+    "USDC/USDT",
+    "LUNA/USDT",
+    "VET/USDT",
+    "MATIC/USDT",
+    "OGN/USDT",
+    "LTO/USDT",
+    "ZEC/USDT",
+    "AXS/USDT",
+    "EOS/USDT",
+    "ICP/USDT",
+    "UMA/USDT",
+    "ROSE/USDT",
+    "ETC/USDT",
+    "THETA/USDT",
+    "SLP/USDT",
+    "ARPA/USDT",
+    "DYDX/USDT",
+    "TVK/USDT",
+    "NKN/USDT",
+    "ENJ/USDT",
+    "ATOM/USDT",
+    "TWT/USDT",
+    "MASK/USDT",
+]
