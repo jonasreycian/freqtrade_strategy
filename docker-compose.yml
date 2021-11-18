@@ -3,9 +3,9 @@ version: "3"
 services:
   freqtrade:
     # image: freqtradeorg/freqtrade:stable
-    # image: freqtradeorg/freqtrade:develop
+    image: freqtradeorg/freqtrade:develop
     # Use plotting image
-    image: freqtradeorg/freqtrade:develop_plot
+    # image: freqtradeorg/freqtrade:develop_plot
     # Build step - only needed when additional dependencies are needed
     # build:
     #   context: .
@@ -29,6 +29,18 @@ services:
     # --strategy UptrendRetraceStrategy
     # -strategy AOTSStrategy
     # --strategy BBRSINaiveStrategy
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - nodes.role == manager
+
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+
+      # labels:
     # Pairlist
     # "method": "StaticPairList",
     # Not llowed for backtesting: VolumePairList, AgeFilter
