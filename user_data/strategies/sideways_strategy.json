@@ -1,0 +1,25 @@
+{
+  "strategy_name": "SidewayStrategy",
+  "params": {
+    "buy": {},
+    "sell": {},
+    "protection": {},
+    "roi": {
+      "0": 0.09,
+      "24": 0.077,
+      "75": 0.038,
+      "190": 0
+    },
+    "stoploss": {
+      "stoploss": -0.348
+    },
+    "trailing": {
+      "trailing_stop": true,
+      "trailing_stop_positive": 0.172,
+      "trailing_stop_positive_offset": 0.19999999999999998,
+      "trailing_only_offset_is_reached": true
+    }
+  },
+  "ft_stratparam_v": 1,
+  "export_time": "2021-11-18 11:02:49.826420+00:00"
+}
